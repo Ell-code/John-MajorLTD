@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>John-Major Innovation Technology LTD</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --white: #ffffff;
+    --bg: #f7f8fc;
+    --bg2: #eef0f7;
+    --ink: #0a0d1a;
+    --ink2: #3a3f5c;
+    --muted: #8b91b0;
+    --accent: #1a3fff;
+    --accent2: #ff4d6d;
+    --gold: #e8a000;
+    --border: #e2e4f0;
+    --card: #ffffff;
+    --shadow: 0 4px 24px rgba(26,63,255,0.07);
+    --shadow-lg: 0 16px 60px rgba(26,63,255,0.12);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); overflow-x: hidden; }
+
+  /* ─── PAGE SYSTEM ─── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    background: rgba(255,255,255,0.94);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5rem; height: 70px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 0.7rem; cursor: pointer; text-decoration: none; }
+  .nav-logo-icon { width: 38px; height: 38px; background: var(--accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #fff; font-weight: 900; font-family: 'Playfair Display', serif; }
+  .nav-logo-text { font-size: 0.82rem; font-weight: 700; color: var(--ink); line-height: 1.2; }
+  .nav-logo-sub { font-size: 0.63rem; color: var(--muted); font-weight: 400; }
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--ink2); font-size: 0.84rem; font-weight: 500; cursor: pointer; transition: color 0.2s; background: none; border: none; font-family: 'DM Sans', sans-serif; padding: 0; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta { background: var(--accent); color: #fff; padding: 0.55rem 1.3rem; border-radius: 8px; font-size: 0.82rem; font-weight: 600; cursor: pointer; border: none; font-family: 'DM Sans', sans-serif; transition: background 0.2s, transform 0.2s; }
+  .nav-cta:hover { background: #0f2dcc; transform: translateY(-1px); }
+
+  /* ─── SECTION COMMONS ─── */
+  .section { padding: 6rem 5rem; }
+  .inner { max-width: 1200px; margin: 0 auto; }
+  .tag-label { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 800; color: var(--ink); margin-bottom: 1rem; line-height: 1.2; }
+  .section-desc { font-size: 1rem; color: var(--ink2); line-height: 1.75; max-width: 580px; }
+  .divider { width: 48px; height: 4px; background: var(--accent); border-radius: 2px; margin: 1rem 0 1.5rem; }
+
+  /* ─── HERO ─── */
+  .hero { min-height: 100vh; padding: 10rem 5rem 5rem; display: flex; align-items: center; gap: 4rem; position: relative; overflow: hidden; background: var(--white); }
+  .hero-blob { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+  .blob { position: absolute; border-radius: 50%; }
+  .blob-1 { width: 700px; height: 700px; top: -300px; right: -250px; background: radial-gradient(circle, rgba(26,63,255,0.07) 0%, transparent 70%); }
+  .blob-2 { width: 400px; height: 400px; bottom: -100px; left: -150px; background: radial-gradient(circle, rgba(232,160,0,0.08) 0%, transparent 70%); }
+  .hero-left { flex: 1; position: relative; z-index: 2; }
+  .hero-pill { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(26,63,255,0.08); border: 1px solid rgba(26,63,255,0.2); color: var(--accent); font-size: 0.72rem; font-weight: 600; padding: 0.4rem 0.9rem; border-radius: 100px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.8rem; animation: fadeUp 0.7s ease both; }
+  .hero-pill span { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+  .hero-h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 5vw, 4.2rem); font-weight: 900; line-height: 1.1; color: var(--ink); margin-bottom: 1.5rem; animation: fadeUp 0.7s 0.1s ease both; }
+  .hero-h1 em { color: var(--accent); font-style: normal; }
+  .hero-h1 .gold { color: var(--gold); display: block; font-size: 0.5em; font-weight: 700; margin-top: 0.4em; }
+  .hero-p { font-size: 1.05rem; color: var(--ink2); line-height: 1.75; max-width: 500px; margin-bottom: 2.5rem; animation: fadeUp 0.7s 0.2s ease both; }
+  .hero-btns { display: flex; gap: 1rem; animation: fadeUp 0.7s 0.3s ease both; }
+  .btn-primary { background: var(--accent); color: #fff; padding: 0.85rem 2rem; border-radius: 10px; font-size: 0.9rem; font-weight: 600; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.2s, transform 0.2s, box-shadow 0.2s; box-shadow: 0 6px 20px rgba(26,63,255,0.25); text-decoration: none; display: inline-block; }
+  .btn-primary:hover { background: #0f2dcc; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(26,63,255,0.35); }
+  .btn-ghost { background: transparent; color: var(--ink); padding: 0.85rem 2rem; border-radius: 10px; font-size: 0.9rem; font-weight: 600; border: 2px solid var(--border); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: border-color 0.2s, color 0.2s; text-decoration: none; display: inline-block; }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-stats { display: flex; gap: 2.5rem; margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid var(--border); animation: fadeUp 0.7s 0.4s ease both; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--ink); }
+  .stat-lbl { font-size: 0.78rem; color: var(--muted); margin-top: 0.1rem; }
+  .hero-right { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; position: relative; z-index: 2; animation: fadeIn 0.9s 0.5s ease both; }
+  .hcard { background: var(--white); border-radius: 16px; border: 1px solid var(--border); padding: 1.5rem; box-shadow: var(--shadow); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; }
+  .hcard:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+  .hcard:nth-child(2) { margin-top: 1.5rem; }
+  .hcard:nth-child(4) { margin-top: -1.5rem; }
+  .hcard-icon { font-size: 2.2rem; margin-bottom: 0.8rem; }
+  .hcard-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.3rem; }
+  .hcard-count { font-size: 0.76rem; color: var(--muted); }
+  .hcard-arrow { color: var(--accent); margin-top: 0.8rem; font-size: 0.9rem; font-weight: 700; }
+
+  /* ─── ABOUT ─── */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; margin-top: 3.5rem; }
+  .about-vis { position: relative; }
+  .about-img { width: 100%; aspect-ratio: 1; background: linear-gradient(135deg, var(--bg2), var(--bg)); border-radius: 24px; display: flex; align-items: center; justify-content: center; font-size: 7rem; border: 1px solid var(--border); box-shadow: var(--shadow-lg); }
+  .about-badge { position: absolute; bottom: -1rem; right: -1rem; background: var(--accent); color: #fff; border-radius: 14px; padding: 1.2rem 1.5rem; box-shadow: 0 8px 30px rgba(26,63,255,0.35); text-align: center; }
+  .ab-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; }
+  .ab-lbl { font-size: 0.68rem; opacity: 0.85; margin-top: 0.1rem; }
+  .about-vals { display: flex; flex-direction: column; gap: 1.3rem; margin-top: 2.5rem; }
+  .aval { display: flex; gap: 1rem; align-items: flex-start; padding: 1.2rem; background: var(--bg); border-radius: 12px; border: 1px solid var(--border); }
+  .aval-icon { width: 42px; height: 42px; min-width: 42px; border-radius: 10px; background: var(--white); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; box-shadow: var(--shadow); }
+  .aval-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.2rem; }
+  .aval-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.55; }
+
+  /* ─── PRODUCTS ─── */
+  .cat-tabs { display: flex; gap: 0.7rem; flex-wrap: wrap; margin: 2.5rem 0; }
+  .tab { padding: 0.6rem 1.3rem; border-radius: 100px; border: 1.5px solid var(--border); background: var(--white); color: var(--ink2); font-size: 0.82rem; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.25s; }
+  .tab:hover { border-color: var(--accent); color: var(--accent); }
+  .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 4px 16px rgba(26,63,255,0.25); }
+  .cat-panel { display: none; }
+  .cat-panel.active { display: block; }
+  .cat-head { margin-bottom: 2rem; }
+  .cat-head h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 0.3rem; }
+  .cat-head p { color: var(--muted); font-size: 0.88rem; }
+  .prod-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(268px, 1fr)); gap: 1.5rem; }
+  .prod-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); transition: transform 0.3s, box-shadow 0.3s; }
+  .prod-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+  .prod-thumb { height: 165px; display: flex; align-items: center; justify-content: center; font-size: 3.8rem; background: var(--bg); position: relative; border-bottom: 1px solid var(--border); }
+  .prod-badge { position: absolute; top: 0.8rem; left: 0.8rem; background: var(--accent2); color: #fff; font-size: 0.62rem; font-weight: 700; padding: 0.22rem 0.65rem; border-radius: 100px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .prod-badge.gold { background: var(--gold); color: #fff; }
+  .prod-body { padding: 1.3rem; }
+  .prod-name { font-weight: 700; font-size: 0.97rem; margin-bottom: 0.3rem; }
+  .prod-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.6; margin-bottom: 0.9rem; }
+  .prod-specs { display: flex; flex-wrap: wrap; gap: 0.33rem; margin-bottom: 1.1rem; }
+  .spec { background: rgba(26,63,255,0.07); color: var(--accent); font-size: 0.67rem; font-weight: 600; padding: 0.2rem 0.55rem; border-radius: 4px; }
+  .prod-foot { display: flex; align-items: center; justify-content: space-between; padding-top: 0.9rem; border-top: 1px solid var(--border); }
+  .prod-price { font-family: 'Playfair Display', serif; font-size: 1.12rem; font-weight: 800; color: var(--ink); }
+  .btn-view { background: var(--accent); color: #fff; border: none; padding: 0.46rem 1.05rem; border-radius: 7px; font-size: 0.77rem; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.2s; }
+  .btn-view:hover { background: #0f2dcc; }
+
+  /* ─── PRODUCT DETAIL ─── */
+  .pd-back { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent); font-weight: 600; font-size: 0.88rem; cursor: pointer; margin-bottom: 2.5rem; background: none; border: none; font-family: 'DM Sans', sans-serif; transition: gap 0.2s; }
+  .pd-back:hover { gap: 0.9rem; }
+  .pd-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .pd-img-wrap { background: var(--white); border: 1px solid var(--border); border-radius: 20px; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 8rem; box-shadow: var(--shadow); }
+  .pd-badges { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  .pd-tag { font-size: 0.68rem; font-weight: 700; padding: 0.3rem 0.8rem; border-radius: 100px; text-transform: uppercase; letter-spacing: 0.07em; }
+  .pd-tag.cat { background: rgba(26,63,255,0.1); color: var(--accent); }
+  .pd-tag.hot { background: rgba(255,77,109,0.1); color: var(--accent2); }
+  .pd-name { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; margin-bottom: 0.5rem; }
+  .pd-price { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; color: var(--accent); margin-bottom: 1.2rem; }
+  .pd-desc { font-size: 0.95rem; color: var(--ink2); line-height: 1.75; margin-bottom: 2rem; }
+  .pd-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 2rem; }
+  .pd-spec { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 0.78rem 1rem; }
+  .pd-spec-l { font-size: 0.67rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+  .pd-spec-v { font-weight: 700; font-size: 0.88rem; margin-top: 0.2rem; }
+  .pd-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+  .btn-buy { background: var(--accent); color: #fff; border: none; padding: 0.9rem 2.5rem; border-radius: 10px; font-size: 0.92rem; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.2s, transform 0.2s; box-shadow: 0 6px 20px rgba(26,63,255,0.25); }
+  .btn-buy:hover { background: #0f2dcc; transform: translateY(-1px); }
+  .btn-wish { background: var(--white); color: var(--ink); border: 2px solid var(--border); padding: 0.9rem 1.5rem; border-radius: 10px; font-size: 0.92rem; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: border-color 0.2s, color 0.2s; }
+  .btn-wish:hover { border-color: var(--accent2); color: var(--accent2); }
+  .pd-feat h4 { font-weight: 700; margin-bottom: 1rem; font-size: 0.95rem; }
+  .pd-feat ul { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+  .pd-feat ul li { display: flex; align-items: center; gap: 0.6rem; font-size: 0.87rem; color: var(--ink2); }
+  .pd-feat ul li::before { content: '✓'; color: var(--accent); font-weight: 800; font-size: 0.85rem; }
+  .pd-related { margin-top: 4rem; }
+  .pd-related h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem; }
+
+  /* ─── WHY ─── */
+  .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+  .why-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 2rem; transition: background 0.3s, transform 0.3s; }
+  .why-card:hover { background: rgba(26,63,255,0.22); transform: translateY(-4px); }
+  .why-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .why-title { font-weight: 700; font-size: 0.95rem; color: #fff; margin-bottom: 0.5rem; }
+  .why-desc { font-size: 0.84rem; color: rgba(255,255,255,0.5); line-height: 1.65; }
+
+  /* ─── CONTACT ─── */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 4rem; margin-top: 3rem; }
+  .c-info { display: flex; flex-direction: column; gap: 1.5rem; }
+  .c-item { display: flex; gap: 1rem; align-items: flex-start; }
+  .c-ico { width: 46px; height: 46px; min-width: 46px; background: rgba(26,63,255,0.08); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; border: 1px solid rgba(26,63,255,0.15); }
+  .c-lbl { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+  .c-val { font-weight: 600; font-size: 0.9rem; margin-top: 0.2rem; line-height: 1.5; }
+  .c-map { margin-top: 2rem; background: var(--bg); border-radius: 14px; border: 1px solid var(--border); height: 150px; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 0.85rem; flex-direction: column; gap: 0.5rem; }
+  .c-form { display: flex; flex-direction: column; gap: 1.2rem; }
+  .f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .f-grp { display: flex; flex-direction: column; gap: 0.4rem; }
+  .f-grp label { font-size: 0.78rem; font-weight: 600; color: var(--ink2); }
+  .f-grp input, .f-grp textarea, .f-grp select { background: var(--bg); border: 1.5px solid var(--border); border-radius: 9px; padding: 0.76rem 1rem; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--ink); transition: border-color 0.25s, box-shadow 0.25s; }
+  .f-grp input:focus, .f-grp textarea:focus, .f-grp select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(26,63,255,0.1); }
+  .f-grp textarea { resize: vertical; min-height: 110px; }
+  .f-grp select option { background: #fff; }
+  .btn-sub { background: var(--accent); color: #fff; border: none; padding: 0.88rem 2.2rem; border-radius: 9px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.2s; align-self: flex-start; box-shadow: 0 6px 20px rgba(26,63,255,0.2); }
+  .btn-sub:hover { background: #0f2dcc; transform: translateY(-1px); }
+
+  /* ─── FOOTER ─── */
+  footer { background: var(--ink); padding: 3.5rem 5rem 0; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
+  .f-brand {}
+  .f-logo-row { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem; }
+  .f-logo-ico { width: 34px; height: 34px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; color: #fff; font-weight: 900; font-family: 'Playfair Display', serif; }
+  .f-logo-txt { font-size: 0.78rem; font-weight: 700; color: #fff; line-height: 1.3; }
+  .f-tagline { font-size: 0.82rem; color: rgba(255,255,255,0.4); line-height: 1.65; max-width: 280px; }
+  .f-col h4 { color: #fff; font-size: 0.78rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.1em; }
+  .f-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .f-col ul li a, .f-col ul li button { color: rgba(255,255,255,0.4); font-size: 0.81rem; text-decoration: none; background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; text-align: left; padding: 0; transition: color 0.2s; }
+  .f-col ul li a:hover, .f-col ul li button:hover { color: #fff; }
+  .f-bottom { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.08); margin-top: 3rem; padding: 1.2rem 5rem; display: flex; align-items: center; justify-content: space-between; }
+  .f-copy { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+
+  /* ─── TOAST ─── */
+  .toast { position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; background: var(--ink); color: #fff; padding: 0.9rem 1.5rem; border-radius: 12px; font-size: 0.87rem; font-weight: 600; box-shadow: var(--shadow-lg); transform: translateY(100px); opacity: 0; transition: all 0.4s ease; border-left: 4px solid var(--accent); max-width: 320px; }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 960px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .section { padding: 4rem 1.5rem; }
+    .hero { padding: 8rem 1.5rem 4rem; flex-direction: column; }
+    .hero-right { display: none; }
+    .about-grid, .contact-grid, .pd-layout { grid-template-columns: 1fr; gap: 2rem; }
+    .about-vis { display: none; }
+    .why-grid { grid-template-columns: 1fr 1fr; }
+    .f-row { grid-template-columns: 1fr; }
+    footer { grid-template-columns: 1fr 1fr; gap: 2rem; padding: 2.5rem 1.5rem 0; }
+    .f-bottom { padding: 1rem 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    .pd-specs { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .why-grid { grid-template-columns: 1fr; }
+    footer { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="goHome()">
+    <div class="nav-logo-icon">J</div>
+    <div>
+      <div class="nav-logo-text">John-Major Innovation Technology</div>
+      <div class="nav-logo-sub">LTD — Trusted Tech Since 2010</div>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a onclick="goHome()">Home</a></li>
+    <li><a onclick="goHome(); setTimeout(()=>goTo('#about'),80)">About</a></li>
+    <li><a onclick="goHome(); setTimeout(()=>goTo('  '),80)">Products</a></li>
+    <li><a onclick="goHome(); setTimeout(()=>goTo('#why'),80)">Why Us</a></li>
+    <li><a onclick="goHome(); setTimeout(()=>goTo('#contact'),80)">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="goHome(); setTimeout(()=>goTo('#contact'),80)">Contact Us</button>
+</nav>
+
+<!-- ══════════════ MAIN PAGE ══════════════ -->
+<div id="page-main" class="page active">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-blob"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
+    <div class="hero-left">
+      <div class="hero-pill"><span></span>Nigeria's #1 Tech Destination</div>
+      <h1 class="hero-h1">Technology<br>That <em>Moves</em> You<span class="gold">John-Major Innovation Technology LTD</span></h1>
+      <p class="hero-p">From flagship smartphones to pro laptops, smart wearables, and premium audio — we bring the world's best gadgets straight to your doorstep with guaranteed quality and unmatched service.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="goTo('#products')">Shop Products</button>
+        <button class="btn-ghost" onclick="goTo('#about')">About Us</button>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-num">500+</div><div class="stat-lbl">Products Available</div></div>
+        <div><div class="stat-num">50K+</div><div class="stat-lbl">Happy Customers</div></div>
+        <div><div class="stat-num">15+</div><div class="stat-lbl">Years of Excellence</div></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hcard" onclick="jumpTab('smartphones')"><div class="hcard-icon">📱</div><div class="hcard-title">Smartphones</div><div class="hcard-count">4 Products</div><div class="hcard-arrow">View All →</div></div>
+      <div class="hcard" onclick="jumpTab('laptops')"><div class="hcard-icon">💻</div><div class="hcard-title">Laptops & Tablets</div><div class="hcard-count">4 Products</div><div class="hcard-arrow">View All →</div></div>
+      <div class="hcard" onclick="jumpTab('watches')"><div class="hcard-icon">⌚</div><div class="hcard-title">Smart Watches</div><div class="hcard-count">3 Products</div><div class="hcard-arrow">View All →</div></div>
+      <div class="hcard" onclick="jumpTab('audio')"><div class="hcard-icon">🎧</div><div class="hcard-title">Audio & More</div><div class="hcard-count">4 Products</div><div class="hcard-arrow">View All →</div></div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about" class="section" style="background:var(--white)">
+    <div class="inner">
+      <div class="tag-label">Who We Are</div>
+      <h2 class="section-title">Innovation. Quality.<br>Your Trust.</h2>
+      <div class="divider"></div>
+      <div class="about-grid">
+        <div>
+          <p class="section-desc">John-Major Innovation Technology LTD was founded with a bold vision: making cutting-edge technology accessible and trustworthy for every Nigerian. Over 15 years, we've grown from a small Lagos-based outlet into one of the country's most trusted technology retailers and distributors.</p>
+          <p style="margin-top:1.2rem;font-size:0.95rem;color:var(--ink2);line-height:1.75;">We partner directly with leading global manufacturers to source genuine products — smartphones, laptops, tablets, wearables, audio equipment, and more — all backed by our robust after-sales support and warranty service.</p>
+          <div class="about-vals">
+            <div class="aval"><div class="aval-icon">⚡</div><div><div class="aval-title">Innovation First</div><div class="aval-desc">We continuously scout the latest technology to keep our customers ahead of the curve.</div></div></div>
+            <div class="aval"><div class="aval-icon">🛡️</div><div><div class="aval-title">100% Genuine Products</div><div class="aval-desc">Every item passes strict quality assurance before reaching you. No counterfeits, ever.</div></div></div>
+            <div class="aval"><div class="aval-icon">🤝</div><div><div class="aval-title">People-Centered Service</div><div class="aval-desc">Our team of experts is always ready to guide, support, and serve you — before and after your purchase.</div></div></div>
+          </div>
+        </div>
+        <div class="about-vis">
+          <div class="about-img">🏢</div>
+          <div class="about-badge"><div class="ab-num">15+</div><div class="ab-lbl">Years Trusted</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="products" class="section" style="background:var(--bg)">
+    <div class="inner">
+      <div class="tag-label">Our Catalogue</div>
+      <h2 class="section-title">Products by Category</h2>
+      <div class="divider"></div>
+      <p class="section-desc">Browse our wide range of premium technology products. Select a category below to explore.</p>
+      <div class="cat-tabs">
+        <button class="tab active" onclick="switchTab('smartphones',this)">📱 Smartphones</button>
+        <button class="tab" onclick="switchTab('laptops',this)">💻 Laptops & Tablets</button>
+        <button class="tab" onclick="switchTab('watches',this)">⌚ Smart Watches</button>
+        <button class="tab" onclick="switchTab('audio',this)">🎧 Audio & Accessories</button>
+        <button class="tab" onclick="switchTab('other',this)">🔧 Other Products</button>
+      </div>
+
+      <!-- SMARTPHONES -->
+      <div id="cat-smartphones" class="cat-panel active">
+        <div class="cat-head"><h3>📱 Smartphones</h3><p>High-performance smartphones for every need and budget.</p></div>
+        <div class="prod-grid">
+          <div class="prod-card"><div class="prod-thumb"><img src="ip7.png" alt="iphone 17"><span class="prod-badge">New</span></div><div class="prod-body"><div class="prod-name">JM Pro X15 Ultra</div><div class="prod-desc">Flagship smartphone with 6.8" AMOLED display, triple-camera system, and all-day battery life.</div><div class="prod-specs"><span class="spec">6.8" AMOLED</span><span class="spec">200MP</span><span class="spec">5G</span><span class="spec">5000mAh</span></div><div class="prod-foot"><div class="prod-price">₦485,000</div><button class="btn-view" onclick="openProd('sp1')">View Details</button></div></div></div>
+          <div class="prod-card"><div class="prod-thumb">📲</div><div class="prod-body"><div class="prod-name">JM Nova S10</div><div class="prod-desc">Mid-range powerhouse with stunning design, fast charging, and AI-enhanced camera.</div><div class="prod-specs"><span class="spec">6.4" OLED</span><span class="spec">108MP</span><span class="spec">5G</span><span class="spec">4500mAh</span></div><div class="prod-foot"><div class="prod-price">₦285,000</div><button class="btn-view" onclick="openProd('sp2')">View Details</button></div></div></div>
+          <div class="prod-card"><div class="prod-thumb">📱</div><div class="prod-body"><div class="prod-name">JM Lite Z5</div><div class="prod-desc">Affordable yet capable — perfect for students and everyday users who need reliable performance.</div><div class="prod-specs"><span class="spec">6.1" LCD</span><span class="spec">50MP</span><span class="spec">4G</span><span class="spec">4000mAh</span></div><div class="prod-foot"><div class="prod-price">₦115,000</div><button class="btn-view" onclick="openProd('sp3')">View Details</button></div></div></div>
+          <div class="prod-card"><div class="prod-thumb">📱<span class="prod-badge gold">Hot</span></div><div class="prod-body"><div class="prod-name">JM Fold 3 Pro</div><div class="prod-desc">Revolutionary foldable smartphone with 7.6" inner display and dual-screen multitasking.</div><div class="prod-specs"><span class="spec">7.6" Fold</span><span class="spec">50MP Triple</span><span class="spec">5G</span><span class="spec">4400mAh</span></div><div class="prod-foot"><div class="prod-price">₦780,000</div><button class="btn-view" onclick="openProd('sp4')">View Details</button></div></div></div>
+        </div>
+      </div>
+
+      <!-- LAPTOPS -->
+      <div id="cat-laptops" class="cat-panel">
+        <div class="cat-head"><h3>💻 Laptops & Tablets</h3><p>Power-packed laptops and versatile tablets for work, school, and creativity.</p></div>
+        <div class="prod-grid">
+          <div class="prod-card"><div class="prod-thumb">💻<span class="prod-badge">New</span></div><div class="prod-body"><div class="prod-name">JM Book Pro 16</div><div class="prod-desc">Professional-grade laptop with 4K OLED display, dedicated GPU, and 18-hour battery life.</div><div class="prod-specs"><span class="spec">16" 4K OLED</span><span class="spec">32GB RAM</span><span class="spec">1TB SSD</span><span class="spec">RTX 4060</span></div><div class="prod-foot"><div class="prod-price">₦1,250,000</div><button class="btn-view" onclick="openProd('lt1')">View Details</button></div></div></div>
+          <div class="prod-card"><div class="prod-thumb">🖥️</div><div class="prod-body"><div class="prod-name">JM UltraBook Air</div><div class="prod-desc">Ultra-thin, feather-light laptop designed for professionals on the go.</div><div class="prod-specs"><span class="spec">14" FHD</span><span class="spec">16GB RAM</span><span class="spec">512GB SSD</span><span class="spec">Intel i7</span></div><div class="prod-foot"><div class="prod-price">₦680,000</div><button class="btn-view" onclick="openProd('lt2')">View Details</button></div></div></div>
+          <div class="prod-card"><div class="prod-thumb">📱<span class="prod-badge gold">Best Buy</span></div><div class="prod-body"><div class="prod-name">JM Tab X12 Pro</div><div class="prod-desc">Premium tablet with 12.4" AMOLED display, keyboard support, and stylus compatibility.</div><div class="prod-specs"><span class="spec">12.4" AMOLED</span><span class="spec">12GB RAM</span><span class="spec">256GB</span><span class="spec">S-Pen</span></div><div class="prod-foot"><div class="prod-price">₦520,000</div><button class="btn-view" onclick="openProd('lt3')">View Details</button></div></div></div>
+          <div class="prod-card"><div class="prod-thumb">💻</div><div class="prod-body"><div class="prod-name">JM Student Plus</div><div class="prod-desc">Durable, affordable laptop engineered for students — light, long battery, reliable performance.</div><div class="prod-specs"><span class="spec">15.6" FHD</span><span class="spec">8GB RAM</span><span class="spec">256GB SSD</span><span class="spec">Intel i5</span></div><div class="prod-foot"><div class="prod-price">₦350,000</div><button class="btn-view" onclick="openProd('lt4')">View Details</button></div></div></div>
+        </div>
+      </div>
+
+      <!-- WATCHES -->
+      <div id="cat-watches" class="cat-panel">
+        <div class="cat-head"><h3>⌚ Smart Watches</h3><p>Stylish smartwatches that track your fitness, health, and keep you connected.</p></div>
+        <div class="prod-grid">
+          <div class="prod-card"><div class="prod-thumb">⌚<span class="prod-badge">New</span></div><div class="prod-body"><div class="prod-name">JM Watch Ultra 2</div><div class="prod-desc">Rugged adventure smartwatch with GPS, ECG, SpO2, and titanium casing.</div><div class="prod-specs"><span class="spec">1.9" AMOLED</span><span class="spec">GPS</span><span class="spec">ECG</span><span class="spec">10-day Battery</span></div><div class="prod-foot"><div class="prod-price">₦185,000</div><button class="btn-view" onclick="openProd('sw1')">View Details</button></div></div></div>
+          <div class="prod-card"><div class="prod-thumb">⌚</div><div class="prod-body"><div class="prod-name">JM FitPro 5</div><div class="prod-desc">Elegant health smartwatch with 100+ sport modes and comprehensive 24/7 health monitoring.</div><div class="prod-specs"><span class="spec">1.7" AMOLED</span><span class="spec">Heart Rate</span><span class="spec">Blood O2</span><span class="spec">7-day Battery</span></div><div class="prod-foot"><div class="prod-price">₦98,000</div><button class="btn-view" onclick="openProd('sw2')">View Details</button></div></div></div>
+          <div class="prod-card"><div class="prod-thumb">⌚</div><div class="prod-body"><div class="prod-name">JM Band Plus 3</div><div class="prod-desc">Slim, lightweight fitness band for tracking steps, sleep, and staying active every day.</div><div class="prod-specs"><span class="spec">1.2" AMOLED</span><span class="spec">Steps</span><span class="spec">Sleep</span><span class="spec">14-day Battery</span></div><div class="prod-foot"><div class="prod-price">₦45,000</div><button class="btn-view" onclick="openProd('sw3')">View Details</button></div></div></div>
+        </div>
+      </div>
+
+      <!-- AUDIO -->
+      <div id="cat-audio" class="cat-panel">
+        <div class="cat-head"><h3>🎧 Audio & Accessories</h3><p>Premium audio equipment and must-have accessories for your tech setup.</p></div>
+        <div class="prod-grid">
+          <div class="prod-card"><div class="prod-thumb">🎧<span class="prod-badge gold">Hot</span></div><div class="prod-body"><div class="prod-name">JM Noise Pro Max</div><div class="prod-desc">Over-ear headphones with industry-leading ANC and 40-hour playback.</div><div class="prod-specs"><span class="spec">ANC</span><span class="spec">Hi-Res Audio</span><span class="spec">BT 5.3</span><span class="spec">40hr Battery</span></div><div class="prod-foot"><div class="prod-price">₦145,000</div><button class="btn-view" onclick="openProd('au1')">View Details</button></div></div></div>
+          <div class="prod-card"><div class="prod-thumb">🎵</div><div class="prod-body"><div class="prod-name">JM Buds Air 3</div><div class="prod-desc">True wireless earbuds with adaptive ANC, spatial audio, and 36-hour total battery life.</div><div class="prod-specs"><span class="spec">ANC</span><span class="spec">Spatial Audio</span><span class="spec">IPX5</span><span class="spec">36hr Total</span></div><div class="prod-foot"><div class="prod-price">₦78,000</div><button class="btn-view" onclick="openProd('au2')">View Details</button></div></div></div>
+          <div class="prod-card"><div class="prod-thumb">🔊</div><div class="prod-body"><div class="prod-name">JM Speaker Boom 360</div><div class="prod-desc">Waterproof Bluetooth speaker with 360° surround sound and 24-hour battery life.</div><div class="prod-specs"><span class="spec">360° Audio</span><span class="spec">IPX7</span><span class="spec">BT 5.2</span><span class="spec">24hr Battery</span></div><div class="prod-foot"><div class="prod-price">₦62,000</div><button class="btn-view" onclick="openProd('au3')">View Details</button></div></div></div>
+          <div class="prod-card"><div class="prod-thumb">🔌</div><div class="prod-body"><div class="prod-name">JM PowerBank 30K Pro</div><div class="prod-desc">30,000mAh power bank with 65W fast charging and three USB ports. Charge everything.</div><div class="prod-specs"><span class="spec">30,000mAh</span><span class="spec">65W Fast</span><span class="spec">3 Ports</span><span class="spec">LED Display</span></div><div class="prod-foot"><div class="prod-price">₦35,000</div><button class="btn-view" onclick="openProd('au4')">View Details</button></div></div></div>
+        </div>
+      </div>
+
+      <!-- OTHER -->
+      <div id="cat-other" class="cat-panel">
+        <div class="cat-head"><h3>🔧 Other Products</h3><p>Smart home devices, gaming gear, cameras, and more innovative products.</p></div>
+        <div class="prod-grid">
+          <div class="prod-card"><div class="prod-thumb">🏠<span class="prod-badge">New</span></div><div class="prod-body"><div class="prod-name">JM Smart Hub Pro</div><div class="prod-desc">Control your entire home with our all-in-one smart home hub. Compatible with 200+ devices.</div><div class="prod-specs"><span class="spec">Wi-Fi 6</span><span class="spec">Zigbee</span><span class="spec">Bluetooth</span><span class="spec">Voice Control</span></div><div class="prod-foot"><div class="prod-price">₦95,000</div><button class="btn-view" onclick="openProd('ot1')">View Details</button></div></div></div>
+          <div class="prod-card"><div class="prod-thumb">🎮</div><div class="prod-body"><div class="prod-name">JM GamePad Elite X</div><div class="prod-desc">Pro gaming controller with haptic feedback, adaptive triggers, and 40-hour battery life.</div><div class="prod-specs"><span class="spec">Haptic</span><span class="spec">BT 5.2</span><span class="spec">40hr Battery</span><span class="spec">Multi-platform</span></div><div class="prod-foot"><div class="prod-price">₦68,000</div><button class="btn-view" onclick="openProd('ot2')">View Details</button></div></div></div>
+          <div class="prod-card"><div class="prod-thumb">📷</div><div class="prod-body"><div class="prod-name">JM ActionCam 4K Ultra</div><div class="prod-desc">Rugged action camera with 4K/60fps recording, image stabilization, and deep waterproofing.</div><div class="prod-specs"><span class="spec">4K/60fps</span><span class="spec">OIS</span><span class="spec">IPX8</span><span class="spec">Wi-Fi</span></div><div class="prod-foot"><div class="prod-price">₦125,000</div><button class="btn-view" onclick="openProd('ot3')">View Details</button></div></div></div>
+          <div class="prod-card"><div class="prod-thumb">🖱️</div><div class="prod-body"><div class="prod-name">JM Wireless Desk Kit</div><div class="prod-desc">Ergonomic wireless keyboard and mouse combo — perfect for home or office productivity.</div><div class="prod-specs"><span class="spec">Wireless</span><span class="spec">Ergonomic</span><span class="spec">18-mo Battery</span><span class="spec">Multi-device</span></div><div class="prod-foot"><div class="prod-price">₦28,000</div><button class="btn-view" onclick="openProd('ot4')">View Details</button></div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section id="why" class="section" style="background:var(--ink)">
+    <div class="inner">
+      <div class="tag-label" style="color:rgba(255,255,255,0.45)">The JMIT Advantage</div>
+      <h2 class="section-title" style="color:#fff">Why Thousands Choose Us</h2>
+      <div class="divider"></div>
+      <p class="section-desc" style="color:rgba(255,255,255,0.5)">We're not just a store — we're a technology partner you can count on, every step of the way.</p>
+      <div class="why-grid">
+        <div class="why-card"><div class="why-icon">🔒</div><div class="why-title">100% Genuine Products</div><div class="why-desc">Every product is sourced directly from certified manufacturers. We guarantee authenticity on every single item sold.</div></div>
+        <div class="why-card"><div class="why-icon">🚚</div><div class="why-title">Fast Nationwide Delivery</div><div class="why-desc">We deliver to every state in Nigeria with secure packaging, real-time tracking, and doorstep convenience.</div></div>
+        <div class="why-card"><div class="why-icon">🛠️</div><div class="why-title">Full After-Sales Support</div><div class="why-desc">Our expert technicians provide comprehensive warranty service, repairs, and ongoing assistance after every purchase.</div></div>
+        <div class="why-card"><div class="why-icon">💰</div><div class="why-title">Best Price Guarantee</div><div class="why-desc">We match competitor prices and offer exclusive deals so you always get the most value for your money.</div></div>
+        <div class="why-card"><div class="why-icon">🌐</div><div class="why-title">500+ Product Range</div><div class="why-desc">One destination for all your tech needs — smartphones, laptops, wearables, audio, smart home, gaming, and more.</div></div>
+        <div class="why-card"><div class="why-icon">⭐</div><div class="why-title">50,000+ Happy Customers</div><div class="why-desc">Over 15 years of trust built one customer at a time. Our reviews and repeat customers speak for themselves.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section" style="background:var(--white)">
+    <div class="inner">
+      <div class="tag-label">Reach Out</div>
+      <h2 class="section-title">Contact Us</h2>
+      <div class="divider"></div>
+      <p class="section-desc">Have a question, bulk inquiry, or need after-sales support? Our team is always ready to help.</p>
+      <div class="contact-grid">
+        <div class="c-info">
+          <div class="c-item"><div class="c-ico">📍</div><div><div class="c-lbl">Head Office</div><div class="c-val">14 Innovation Drive, Victoria Island, Lagos, Nigeria</div></div></div>
+          <div class="c-item"><div class="c-ico">📞</div><div><div class="c-lbl">Phone</div><div class="c-val">+234 803 000 1234<br>+234 901 234 5678</div></div></div>
+          <div class="c-item"><div class="c-ico">📧</div><div><div class="c-lbl">Email</div><div class="c-val">info@johnmajortech.com<br>support@johnmajortech.com</div></div></div>
+          <div class="c-item"><div class="c-ico">🕐</div><div><div class="c-lbl">Business Hours</div><div class="c-val">Mon – Sat: 8:00AM – 6:00PM<br>Sunday: Closed</div></div></div>
+          <div class="c-item"><div class="c-ico">📲</div><div><div class="c-lbl">Social Media</div><div class="c-val">@JohnMajorTech on Instagram, X & Facebook</div></div></div>
+          <div class="c-map"><div style="font-size:2rem">📍</div><div>14 Innovation Drive, Victoria Island, Lagos</div></div>
+        </div>
+        <form class="c-form" onsubmit="handleSubmit(event)">
+          <div class="f-row">
+            <div class="f-grp"><label>First Name</label><input type="text" placeholder="John" required/></div>
+            <div class="f-grp"><label>Last Name</label><input type="text" placeholder="Doe" required/></div>
+          </div>
+          <div class="f-grp"><label>Email Address</label><input type="email" placeholder="you@example.com" required/></div>
+          <div class="f-grp"><label>Phone Number</label><input type="tel" placeholder="+234 ..."/></div>
+          <div class="f-grp"><label>Subject</label><select><option>Product Inquiry</option><option>Bulk / Wholesale Order</option><option>Technical Support</option><option>Partnership & Distribution</option><option>Warranty Claim</option><option>Other</option></select></div>
+          <div class="f-grp"><label>Message</label><textarea placeholder="Tell us how we can help you..."></textarea></div>
+          <button type="submit" class="btn-sub">Send Message →</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="f-brand">
+      <div class="f-logo-row"><div class="f-logo-ico">J</div><div class="f-logo-txt">John-Major Innovation Technology LTD</div></div>
+      <p class="f-tagline">Bringing world-class technology to Nigeria with trust, quality, and unmatched service since 2010.</p>
+    </div>
+    <div class="f-col"><h4>Company</h4><ul><li><a onclick="goTo('#about')">About Us</a></li><li><a href="#">Careers</a></li><li><a href="#">Press</a></li><li><a onclick="goTo('#contact')">Contact</a></li></ul></div>
+    <div class="f-col"><h4>Products</h4><ul><li><button onclick="jumpTab('smartphones')">Smartphones</button></li><li><button onclick="jumpTab('laptops')">Laptops & Tablets</button></li><li><button onclick="jumpTab('watches')">Smart Watches</button></li><li><button onclick="jumpTab('audio')">Audio & Accessories</button></li><li><button onclick="jumpTab('other')">Other Products</button></li></ul></div>
+    <div class="f-col"><h4>Support</h4><ul><li><a href="#">FAQ</a></li><li><a href="#">Warranty</a></li><li><a href="#">Returns Policy</a></li><li><a href="#">Track Order</a></li><li><a href="#">Service Centers</a></li></ul></div>
+  </footer>
+  <div class="f-bottom"><div class="f-copy">© 2025 John-Major Innovation Technology LTD. All rights reserved.</div><div class="f-copy">Designed with ❤️ in Lagos, Nigeria</div></div>
+
+</div><!-- /page-main -->
+
+<!-- ══════════════ PRODUCT DETAIL PAGE ══════════════ -->
+<div id="page-product" class="page">
+  <section class="section" style="padding-top:100px;background:var(--bg);min-height:100vh">
+    <div class="inner">
+      <button class="pd-back" onclick="goBack()">← Back to Products</button>
+      <div class="pd-layout">
+        <div class="pd-img-wrap" id="pd-img">📱</div>
+        <div>
+          <div class="pd-badges"><span class="pd-tag cat" id="pd-cat">Smartphone</span><span class="pd-tag hot" id="pd-xtag" style="display:none">Hot</span></div>
+          <div class="pd-name" id="pd-name">-</div>
+          <div class="pd-price" id="pd-price">-</div>
+          <p class="pd-desc" id="pd-desc">-</p>
+          <div class="pd-specs" id="pd-specs"></div>
+          <div class="pd-actions">
+            <button class="btn-buy" onclick="showToast('🎉 Inquiry sent! Our team will contact you within 24 hours.')">Inquire Now</button>
+            <button class="btn-wish" onclick="showToast('❤️ Saved to your wishlist!')">♡ Wishlist</button>
+          </div>
+          <div class="pd-feat"><h4>Key Features</h4><ul id="pd-feats"></ul></div>
+        </div>
+      </div>
+      <div class="pd-related"><h3>You May Also Like</h3><div class="prod-grid" id="pd-rel"></div></div>
+    </div>
+  </section>
+</div><!-- /page-product -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── PRODUCT DATA ───
+const P = {
+  sp1:{name:'JM Pro X15 Ultra',price:'₦485,000',cat:'Smartphone',xtag:'New',img:'📱',desc:'The JM Pro X15 Ultra is our crown jewel — a true flagship for those who demand the absolute best. Featuring a breathtaking 6.8" Dynamic AMOLED 120Hz display, Snapdragon 8 Gen 3 processor, and a revolutionary 200MP triple-camera, it redefines what a smartphone can do.',specs:[{l:'Display',v:'6.8" AMOLED 120Hz'},{l:'Processor',v:'Snapdragon 8 Gen 3'},{l:'Camera',v:'200MP + 50MP + 12MP'},{l:'Battery',v:'5000mAh, 65W Fast'},{l:'RAM',v:'12GB / 16GB'},{l:'Storage',v:'256GB / 512GB'},{l:'Connectivity',v:'5G, Wi-Fi 7, BT 5.3'},{l:'OS',v:'Android 15'}],feats:['Under-display fingerprint sensor','IP68 water & dust resistance','Satellite connectivity','AI-powered photo editing','Dolby Atmos stereo speakers','45W wireless charging']},
+  sp2:{name:'JM Nova S10',price:'₦285,000',cat:'Smartphone',xtag:'',img:'📲',desc:'The JM Nova S10 delivers flagship-tier experience at a mid-range price. With its 6.4" OLED display, Snapdragon 7 Gen 3, and a 108MP AI camera, it handles photography, gaming, and everything in between with ease.',specs:[{l:'Display',v:'6.4" OLED 90Hz'},{l:'Processor',v:'Snapdragon 7 Gen 3'},{l:'Camera',v:'108MP + 12MP + 8MP'},{l:'Battery',v:'4500mAh, 45W Fast'},{l:'RAM',v:'8GB / 12GB'},{l:'Storage',v:'128GB / 256GB'},{l:'Connectivity',v:'5G, Wi-Fi 6E'},{l:'OS',v:'Android 14'}],feats:['Gorilla Glass Victus protection','33W wireless charging','Night mode with AI scene detection','Expandable storage up to 1TB','Side-mounted fingerprint sensor','3.5mm headphone jack']},
+  sp3:{name:'JM Lite Z5',price:'₦115,000',cat:'Smartphone',xtag:'',img:'📱',desc:'The JM Lite Z5 proves great smartphones don\'t have to be expensive. Designed for students and everyday users, it delivers dependable performance, a capable camera, and long battery life at an accessible price.',specs:[{l:'Display',v:'6.1" LCD 60Hz'},{l:'Processor',v:'MediaTek Helio G99'},{l:'Camera',v:'50MP + 5MP + 2MP'},{l:'Battery',v:'4000mAh, 18W Fast'},{l:'RAM',v:'4GB / 6GB'},{l:'Storage',v:'64GB / 128GB'},{l:'Connectivity',v:'4G LTE, Wi-Fi 5'},{l:'OS',v:'Android 14 Go'}],feats:['Dual SIM with dedicated microSD slot','Face unlock and fingerprint sensor','FM Radio built-in','Reverse charging support','AI portrait mode','Kids mode for parental controls']},
+  sp4:{name:'JM Fold 3 Pro',price:'₦780,000',cat:'Smartphone',xtag:'Hot',img:'📱',desc:'The future is foldable. The JM Fold 3 Pro features a stunning 7.6" inner foldable display and a 6.2" cover screen, letting you seamlessly switch between phone and tablet mode. Multitask like never before.',specs:[{l:'Inner Display',v:'7.6" AMOLED 120Hz'},{l:'Cover Display',v:'6.2" AMOLED 120Hz'},{l:'Processor',v:'Snapdragon 8 Gen 3'},{l:'Camera',v:'50MP + 12MP + 10MP'},{l:'Battery',v:'4400mAh, 65W Fast'},{l:'RAM',v:'12GB'},{l:'Storage',v:'256GB / 512GB'},{l:'OS',v:'Android 15'}],feats:['IPX8 water resistance','Flex mode for hands-free use','S Pen compatible (sold separately)','Multi-window for 3 apps simultaneously','Titanium aerospace frame','Ultra-thin glass inner display']},
+  lt1:{name:'JM Book Pro 16',price:'₦1,250,000',cat:'Laptop',xtag:'New',img:'💻',desc:'Built for creators, engineers, and power users, the JM Book Pro 16 features a stunning 16" 4K OLED touchscreen, RTX 4060 graphics, and enough power to handle 4K video editing, 3D rendering, and heavy development workloads all day.',specs:[{l:'Display',v:'16" 4K OLED Touch'},{l:'Processor',v:'Intel Core i9-13900H'},{l:'GPU',v:'NVIDIA RTX 4060 8GB'},{l:'RAM',v:'32GB DDR5'},{l:'Storage',v:'1TB NVMe SSD'},{l:'Battery',v:'99Wh, 18-hour life'},{l:'OS',v:'Windows 11 Pro'},{l:'Weight',v:'2.1 kg'}],feats:['Thunderbolt 4 ports x2','HDMI 2.1 output','Wi-Fi 6E + Bluetooth 5.3','RGB per-key backlit keyboard','Windows Hello facial recognition','Dolby Atmos quad speakers']},
+  lt2:{name:'JM UltraBook Air',price:'₦680,000',cat:'Laptop',xtag:'',img:'🖥️',desc:'At just 1.1kg and 12mm thin, the JM UltraBook Air is the ultimate productivity companion. With all-day battery life and Intel Core i7, you get serious performance in an impossibly light, beautifully slim package.',specs:[{l:'Display',v:'14" FHD IPS 300nit'},{l:'Processor',v:'Intel Core i7-1360P'},{l:'RAM',v:'16GB LPDDR5'},{l:'Storage',v:'512GB NVMe SSD'},{l:'Battery',v:'72Wh, 16-hour life'},{l:'Weight',v:'1.1 kg'},{l:'Thickness',v:'12mm'},{l:'OS',v:'Windows 11 Home'}],feats:['USB-C charging (65W adapter included)','MIL-SPEC 810H durability rating','Backlit keyboard','Fingerprint reader in power button','Wi-Fi 6E support','Slim bezel display']},
+  lt3:{name:'JM Tab X12 Pro',price:'₦520,000',cat:'Tablet',xtag:'Best Buy',img:'📱',desc:'The JM Tab X12 Pro blends productivity and creativity perfectly. With a 12.4" AMOLED display, S-Pen support, and optional keyboard cover, it transitions from media powerhouse to full laptop replacement seamlessly.',specs:[{l:'Display',v:'12.4" AMOLED 120Hz'},{l:'Processor',v:'Snapdragon 8 Gen 2'},{l:'RAM',v:'12GB'},{l:'Storage',v:'256GB UFS 3.1'},{l:'Battery',v:'10,090mAh, 45W Fast'},{l:'Camera',v:'13MP rear + 8MP front'},{l:'Connectivity',v:'Wi-Fi 6E, BT 5.3'},{l:'OS',v:'Android 14 + DeX Mode'}],feats:['S Pen included in box','Keyboard cover available separately','Quad stereo speakers (tuned by AKG)','USB-C 3.2 Gen 2 port','DeX desktop mode','Face recognition + fingerprint']},
+  lt4:{name:'JM Student Plus',price:'₦350,000',cat:'Laptop',xtag:'',img:'💻',desc:'Engineered with students in mind, the JM Student Plus is durable, affordable, and capable. It handles coursework, online classes, and everyday tasks without compromise — perfect for campus life.',specs:[{l:'Display',v:'15.6" FHD IPS'},{l:'Processor',v:'Intel Core i5-1235U'},{l:'RAM',v:'8GB DDR4'},{l:'Storage',v:'256GB SSD'},{l:'Battery',v:'45Wh, 8-hour life'},{l:'Weight',v:'1.85 kg'},{l:'OS',v:'Windows 11 Home'},{l:'Ports',v:'USB-A x2, USB-C, HDMI'}],feats:['Budget-friendly without compromising quality','Backlit keyboard for night study','720p HD webcam for video calls','Microsoft Office starter included','MicroSD card slot','Anti-glare display coating']},
+  sw1:{name:'JM Watch Ultra 2',price:'₦185,000',cat:'Smart Watch',xtag:'New',img:'⌚',desc:'Designed for adventurers and athletes, the JM Watch Ultra 2 is built to go anywhere. Titanium casing, sapphire crystal, and precision GPS make it the watch that matches your ambition and endurance.',specs:[{l:'Display',v:'1.9" AMOLED Always-on'},{l:'Build',v:'Titanium + Sapphire Glass'},{l:'Battery',v:'10 days typical use'},{l:'GPS',v:'Dual-frequency L1+L5'},{l:'Health',v:'ECG, SpO2, Skin Temp'},{l:'Water',v:'100m water resistant'},{l:'OS',v:'JMIT Watch OS 3'},{l:'Strap',v:'Ocean Band included'}],feats:['Emergency SOS via satellite','Advanced crash detection','Route guidance for hiking, cycling, running','100+ sport tracking modes','Sleep staging and recovery score','Built-in 86dB emergency siren']},
+  sw2:{name:'JM FitPro 5',price:'₦98,000',cat:'Smart Watch',xtag:'',img:'⌚',desc:'The JM FitPro 5 is your daily health companion. Its vibrant AMOLED display and comprehensive sensor suite track your heart rate, blood oxygen, stress levels, and sleep — giving you a full picture of your wellness.',specs:[{l:'Display',v:'1.7" AMOLED 336ppi'},{l:'Battery',v:'7 days typical'},{l:'Health',v:'Heart rate, SpO2, Stress'},{l:'Sport Modes',v:'100+'},{l:'Water Rating',v:'5ATM'},{l:'GPS',v:'Built-in GPS'},{l:'Strap',v:'Silicone, 22mm'},{l:'OS',v:'JMIT FitOS 2'}],feats:['Menstrual cycle tracking','Guided breathing & meditation','AI sleep coaching','Smart notifications (calls, texts, apps)','Find My Phone feature','JMIT Health App integration']},
+  sw3:{name:'JM Band Plus 3',price:'₦45,000',cat:'Fitness Band',xtag:'',img:'⌚',desc:'Simple, stylish, and smart. The JM Band Plus 3 tracks what matters most — steps, calories, sleep, and heart rate — in an ultra-slim design that goes with every outfit and fits every budget.',specs:[{l:'Display',v:'1.2" AMOLED Color'},{l:'Battery',v:'14 days typical'},{l:'Tracking',v:'Steps, Calories, Distance'},{l:'Health',v:'Heart rate, SpO2, Sleep'},{l:'Water Rating',v:'5ATM swim-proof'},{l:'Sport Modes',v:'50+'},{l:'Strap',v:'Interchangeable silicone'},{l:'Charging',v:'Magnetic pin'}],feats:['Always-on display option','Quick replies to notifications','Music playback control','Alarm & timer functions','Sedentary activity reminder','Ultra-light 25g design']},
+  au1:{name:'JM Noise Pro Max',price:'₦145,000',cat:'Headphones',xtag:'Hot',img:'🎧',desc:'The JM Noise Pro Max sets a new standard for over-ear headphones. With three microphones per cup for adaptive noise cancellation, Hi-Res Audio certification, and 40 hours of playback, this is the pinnacle of personal audio.',specs:[{l:'Type',v:'Over-ear, Closed-back'},{l:'ANC',v:'Adaptive 3-mic system'},{l:'Battery',v:'40hr (ANC on), 60hr off'},{l:'Driver',v:'40mm custom dynamic'},{l:'Bluetooth',v:'5.3, AAC & LDAC'},{l:'Charging',v:'USB-C, 10min = 3hrs'},{l:'Weight',v:'250g'},{l:'Colors',v:'Black, Silver, Cream'}],feats:['Transparency / pass-through mode','Multipoint connection (2 devices)','Wear detection (auto-pause on removal)','Touch controls on ear cup','3.5mm wired option included','Foldable for travel with hard case']},
+  au2:{name:'JM Buds Air 3',price:'₦78,000',cat:'Earbuds',xtag:'',img:'🎵',desc:'The JM Buds Air 3 delivers a truly immersive listening experience in a compact form. Adaptive ANC, Dolby Atmos spatial audio, and 36 hours total battery — earbuds that never compromise.',specs:[{l:'Type',v:'True Wireless In-ear'},{l:'ANC',v:'Adaptive with 6 microphones'},{l:'Battery',v:'8hr buds + 28hr case'},{l:'Driver',v:'11mm graphene coated'},{l:'Bluetooth',v:'5.3, AAC & LDAC'},{l:'Water Rating',v:'IPX5 earbuds, IPX4 case'},{l:'Fit',v:'Ergonomic, 3 tip sizes'},{l:'Charging',v:'USB-C + wireless Qi'}],feats:['Dolby Atmos spatial audio','Conversation mode (hear the world)','Touch + voice assistant control','Personalized EQ via JMIT app','Find My Buds feature','Quick pair with JMIT devices']},
+  au3:{name:'JM Speaker Boom 360',price:'₦62,000',cat:'Speaker',xtag:'',img:'🔊',desc:'Take the party anywhere with the JM Speaker Boom 360. Dual passive radiators and a 360° driver deliver room-filling sound in a rugged IPX7 waterproof body that goes from the beach to the backyard.',specs:[{l:'Output',v:'30W peak'},{l:'Drivers',v:'2x full-range + 2x radiators'},{l:'Battery',v:'24 hours at 50% volume'},{l:'Water Rating',v:'IPX7 (1m, 30min)'},{l:'Bluetooth',v:'5.2, multipoint connect'},{l:'Inputs',v:'USB-C, 3.5mm AUX'},{l:'Extra',v:'Built-in 5000mAh power bank'},{l:'Weight',v:'780g'}],feats:['Party Link (pair 2 speakers for stereo)','LED ambient light ring','Built-in speakerphone','Bass boost mode','Floats on water (pool-safe)','USB-A port to charge your devices']},
+  au4:{name:'JM PowerBank 30K Pro',price:'₦35,000',cat:'Accessory',xtag:'',img:'🔌',desc:'Never run out of power again. The JM PowerBank 30K Pro packs a massive 30,000mAh with 65W USB-C Power Delivery — enough to fully charge a laptop and two phones on a single charge.',specs:[{l:'Capacity',v:'30,000mAh'},{l:'USB-C',v:'65W PD (input & output)'},{l:'USB-A 1',v:'22.5W Quick Charge'},{l:'USB-A 2',v:'12W standard'},{l:'Display',v:'Digital LED % indicator'},{l:'Recharge',v:'~3hrs via 65W input'},{l:'Weight',v:'620g'},{l:'Safety',v:'Over-charge & heat protection'}],feats:['Charges laptop, tablet & phone at once','Airline-safe (under 100Wh)','Soft grip anti-slip casing','Built-in LED flashlight','Trickle charge mode for earbuds','12-month warranty included']},
+  ot1:{name:'JM Smart Hub Pro',price:'₦95,000',cat:'Smart Home',xtag:'New',img:'🏠',desc:'Transform your home into a smart home with the JM Smart Hub Pro. Compatible with over 200 devices across all major ecosystems — it\'s the central intelligence for your connected home.',specs:[{l:'Connectivity',v:'Wi-Fi 6, Zigbee, Z-Wave'},{l:'Bluetooth',v:'5.0 + Thread'},{l:'Compatibility',v:'Alexa, Google, HomeKit'},{l:'Processor',v:'Quad-core 1.8GHz'},{l:'RAM',v:'2GB'},{l:'Storage',v:'16GB'},{l:'Power',v:'12V DC adapter'},{l:'Ports',v:'USB-A, Ethernet'}],feats:['Local processing for instant response','End-to-end encryption for privacy','Automation routines & smart scenes','Works offline after initial setup','JMIT Smart Home companion app','Energy usage monitoring & reporting']},
+  ot2:{name:'JM GamePad Elite X',price:'₦68,000',cat:'Gaming',xtag:'',img:'🎮',desc:'Designed for competitive gamers, the JM GamePad Elite X features Hall Effect analog sticks for zero drift, adaptive triggers with haptic feedback, and a 40-hour battery — compatible with PC, Android, and cloud gaming.',specs:[{l:'Sticks',v:'Hall Effect (zero drift)'},{l:'Triggers',v:'Adaptive with haptics'},{l:'Battery',v:'40 hours'},{l:'Connectivity',v:'BT 5.2 + 2.4GHz dongle'},{l:'Platforms',v:'PC, Android, Cloud Gaming'},{l:'Charging',v:'USB-C'},{l:'Back Buttons',v:'4 remappable buttons'},{l:'Weight',v:'280g'}],feats:['Full button remapping via app','3.5mm headphone jack','Textured grip rubber handles','Trigger locks for competitive shooters','Motion controls support','Officially certified for Xbox Cloud Gaming']},
+  ot3:{name:'JM ActionCam 4K Ultra',price:'₦125,000',cat:'Camera',xtag:'',img:'📷',desc:'Capture life\'s greatest adventures in stunning 4K. The JM ActionCam 4K Ultra features horizon leveling, wind noise reduction, and IPX8 waterproofing — go 10 meters deep without any housing.',specs:[{l:'Video',v:'4K/60fps, 2.7K/120fps'},{l:'Photo',v:'20MP RAW + JPEG'},{l:'Stabilization',v:'6-axis RockSteady OIS'},{l:'Waterproof',v:'10m without housing'},{l:'Battery',v:'1500mAh, ~90min 4K'},{l:'Screen',v:'2.2" touch + 1.4" front'},{l:'Wi-Fi',v:'5GHz for fast transfer'},{l:'Mounts',v:'GoPro-compatible mounts'}],feats:['HyperSmooth 4.0 stabilization','10 voice control commands','Time-lapse & slow-motion modes','Live streaming up to 1080p','GPS speed & route tracking','Night mode for low-light video']},
+  ot4:{name:'JM Wireless Desk Kit',price:'₦28,000',cat:'Accessory',xtag:'',img:'🖱️',desc:'Declutter your desk with the JM Wireless Desk Kit. Full-size keyboard and precision mouse share a single USB receiver, designed for all-day comfort and marathon productivity sessions.',specs:[{l:'Keyboard',v:'Full-size, low-profile'},{l:'Mouse',v:'1000/1600/2400 DPI'},{l:'Connection',v:'2.4GHz + BT 5.0'},{l:'Keyboard Battery',v:'18 months'},{l:'Mouse Battery',v:'12 months'},{l:'Multi-device',v:'Up to 3 devices'},{l:'Receiver',v:'1 nano-USB for both'},{l:'Spill Proof',v:'Keyboard IPX4 rated'}],feats:['Silent low-click typing experience','Ergonomic palm rest included','Scroll wheel with fast scroll mode','Easy-switch between 3 devices','On/off switches save battery','Full numeric keypad included']}
+};
+
+// ─── NAVIGATION ───
+function goHome() { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('page-main').classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
+function goTo(id) { const el=document.querySelector(id); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }
+function goBack() { goHome(); setTimeout(()=>goTo('#products'),100); }
+function switchTab(id,btn) { document.querySelectorAll('.cat-panel').forEach(p=>p.classList.remove('active')); document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active')); document.getElementById('cat-'+id).classList.add('active'); btn.classList.add('active'); }
+function jumpTab(id) { goHome(); setTimeout(()=>{ goTo('#products'); setTimeout(()=>{ document.querySelectorAll('.cat-panel').forEach(p=>p.classList.remove('active')); document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active')); document.getElementById('cat-'+id).classList.add('active'); const m={smartphones:0,laptops:1,watches:2,audio:3,other:4}; document.querySelectorAll('.tab')[m[id]].classList.add('active'); },400); },100); }
+function openProd(id) {
+  const p=P[id];
+  document.getElementById('pd-img').textContent=p.img;
+  document.getElementById('pd-name').textContent=p.name;
+  document.getElementById('pd-price').textContent=p.price;
+  document.getElementById('pd-desc').textContent=p.desc;
+  document.getElementById('pd-cat').textContent=p.cat;
+  const xt=document.getElementById('pd-xtag');
+  if(p.xtag){xt.textContent=p.xtag;xt.style.display='';}else{xt.style.display='none';}
+  document.getElementById('pd-specs').innerHTML=p.specs.map(s=>`<div class="pd-spec"><div class="pd-spec-l">${s.l}</div><div class="pd-spec-v">${s.v}</div></div>`).join('');
+  document.getElementById('pd-feats').innerHTML=p.feats.map(f=>`<li>${f}</li>`).join('');
+  const all=Object.keys(P).filter(k=>k!==id).sort(()=>0.5-Math.random()).slice(0,3);
+  document.getElementById('pd-rel').innerHTML=all.map(rid=>{const rp=P[rid];return`<div class="prod-card"><div class="prod-thumb">${rp.img}</div><div class="prod-body"><div class="prod-name">${rp.name}</div><div class="prod-desc">${rp.desc.slice(0,75)}...</div><div class="prod-foot"><div class="prod-price">${rp.price}</div><button class="btn-view" onclick="openProd('${rid}')">View</button></div></div></div>`;}).join('');
+  document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active'));
+  document.getElementById('page-product').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ─── FORM ───
+function handleSubmit(e) { e.preventDefault(); const b=e.target.querySelector('.btn-sub'); b.textContent='✅ Sent!'; b.style.background='#16a34a'; showToast('✅ Your message has been sent! We\'ll be in touch within 24 hours.'); setTimeout(()=>{b.textContent='Send Message →';b.style.background='';e.target.reset();},3500); }
+
+// ─── TOAST ───
+function showToast(msg) { const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3800); }
+
+// ─── SCROLL REVEAL ───
+const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}});},{threshold:0.08});
+document.querySelectorAll('.prod-card,.why-card,.aval,.hcard,.c-item').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(20px)';el.style.transition='opacity 0.55s ease,transform 0.55s ease';obs.observe(el);});
+</script>
+</body>
+</html>
